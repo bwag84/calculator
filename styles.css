@@ -1,0 +1,58 @@
+/*setting font and background color*/
+
+body {
+    background-color: lightblue;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+* {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+/*calculator styling*/
+
+.calculator {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.display {
+    grid-column: span 4;
+    background-color: #222;
+    color: white;
+    font-size: 2em;
+    text-align: right;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.button {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 20px;
+    font-size: 1.5em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #ddd;
+}
+

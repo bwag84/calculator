@@ -9,24 +9,114 @@
 </head>
 <body>
     <h1>Calculator</h1>
-    <div class="calculator">
-        <div class="display">0</div>
-        <button class="button">7</button>
-        <button class="button">8</button>
-        <button class="button">9</button>
-        <button class="button">/</button>
-        <button class="button">4</button>
-        <button class="button">5</button>
-        <button class="button">6</button>
-        <button class="button">*</button>
-        <button class="button">1</button>
-        <button class="button">2</button>
-        <button class="button">3</button>
-        <button class="button">-</button>
-        <button class="button">0</button>
-        <button class="button">.</button>
-        <button class="button">=</button>
-        <button class="button">+</button>
+    <div class="calculator grid grid-cols-4 gap-2 max-w-md mx-auto mt-12 p-4 bg-white rounded-lg shadow-lg">
+        <div class="display col-span-4 bg-gray-800 text-white text-2xl text-right p-2 rounded">0</div>
+        <button id="seven" class="button bg-gray-200 p-4 text-xl rounded hover:bg-gray-300">7</button>
+        <button id="eight" class="button bg-gray-200 p-4 text-xl rounded hover:bg-gray-300">8</button>
+        <button id="nine" class="button bg-gray-200 p-4 text-xl rounded hover:bg-gray-300">9</button>
+        <button id="divide" class="button bg-gray-200 p-4 text-xl rounded hover:bg-gray-300">/</button>
+        <button id="four" class="button bg-gray-200 p-4 text-xl rounded hover:bg-gray-300">4</button>
+        <button id="five" class="button bg-gray-200 p-4 text-xl rounded hover:bg-gray-300">5</button>
+        <button id="six" class="button bg-gray-200 p-4 text-xl rounded hover:bg-gray-300">6</button>
+        <button id="multiply" class="button bg-gray-200 p-4 text-xl rounded hover:bg-gray-300">*</button>
+        <button id="one" class="button bg-gray-200 p-4 text-xl rounded hover:bg-gray-300">1</button>
+        <button id="two" class="button bg-gray-200 p-4 text-xl rounded hover:bg-gray-300">2</button>
+        <button id="three" class="button bg-gray-200 p-4 text-xl rounded hover:bg-gray-300">3</button>
+        <button id="subtract" class="button bg-gray-200 p-4 text-xl rounded hover:bg-gray-300">-</button>
+        <button id="zero" class="button bg-gray-200 p-4 text-xl rounded hover:bg-gray-300">0</button>
+        <button id="decimal" class="button bg-gray-200 p-4 text-xl rounded hover:bg-gray-300">.</button>
+        <button id="equals" class="button bg-gray-200 p-4 text-xl rounded hover:bg-gray-300">=</button>
+        <button id="add" class="button bg-gray-200 p-4 text-xl rounded hover:bg-gray-300">+</button>
+        <button id="backspace" class="button bg-gray-200 p-4 text-xl rounded hover:bg-gray-300 col-span-2">←</button>
+        <button id="clear" class="button clear bg-red-500 p-4 text-xl rounded hover:bg-red-600 col-span-2">C</button>
     </div>
+ 
+    <script>
+        class Calculator {
+            constructor() {
+                this.currentValue = '';
+                this.previousValue = '';
+                this.operator = null;
+            }
+
+            add(a, b) {
+                return parseFloat((a + b).toFixed(2));
+            }
+
+            subtract(a, b) {
+                return parseFloat((a - b).toFixed(2));
+            }
+
+            multiply(a, b) {
+                return parseFloat((a * b).toFixed(2));
+            }
+
+            divide(a, b) {
+                if (b === 0) {
+                    return 'ERROR';
+                }
+                return parseFloat((a / b).toFixed(2));
+            }
+
+            operate() {
+                let result;
+                const a = parseFloat(this.previousValue);
+                const b = parseFloat(this.currentValue);
+
+                switch (this.operator) {
+                    case '+':
+                        result = this.add(a, b);
+                        break;
+                    case '-':
+                        result = this.subtract(a, b);
+                        break;
+                    case '*':
+                        result = this.multiply(a, b);
+                        break;
+                    case '/':
+                        result = this.divide(a, b);
+                        break;
+                    default:
+                        return;
+                }
+
+                this.currentValue = result.toString();
+                this.previousValue = '';
+                this.operator = null;
+                return result;
+            }
+        }
+
+        if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+            module.exports = Calculator;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const display = document.querySelector('.display');
+            const buttons = document.querySelectorAll('.button');
+            const calc = new Calculator();
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const { id } = button;
+
+                    if (id === 'equals') {
+                        display.textContent = calc.operate();
+                    } else if (id === 'add' || id === 'subtract' || id === 'multiply' || id === 'divide') {
+                        calc.operator = button.textContent;
+                        calc.previousValue = calc.currentValue;
+                        calc.currentValue = '';
+                        display.textContent = `${calc.previousValue} ${calc.operator}`;
+                    } else if (id === 'backspace') {
+                        calc.currentValue = calc.currentValue.slice(0, -1);
+                        display.textContent = calc.currentValue || '0';
+                    } else {
+                        calc.currentValue += button.textContent;
+                        display.textContent = calc.currentValue;
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

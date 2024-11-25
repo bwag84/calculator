@@ -1,7 +1,7 @@
 // calculator.test.js
 
 describe('Calculator', () => {
-    const Calculator = require('./calc'); // Update the file name to 'calc'
+    const Calculator = require('calc'); // Update the file name to 'calc'
     let calc;
   
     beforeEach(() => {

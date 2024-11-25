@@ -99,23 +99,36 @@
             buttons.forEach(button => {
                 button.addEventListener('click', () => {
                     const { id } = button;
+                    handleInput(id, button.textContent);
+                });
+            });
 
-                    if (id === 'equals') {
-                        display.textContent = calc.operate();
-                    } else if (id === 'add' || id === 'subtract' || id === 'multiply' || id === 'divide') {
-                        calc.operator = button.textContent;
+            function handleInput(id, textContent) {
+                if (id === 'equals') {
+                    display.textContent = calc.operate();
+                } else if (id === 'add' || id === 'subtract' || id === 'multiply' || id === 'divide') {
+                    if (calc.currentValue === '' && id === 'subtract') {
+                        calc.currentValue = '-';
+                        display.textContent = calc.currentValue;
+                    } else {
+                        calc.operator = textContent;
                         calc.previousValue = calc.currentValue;
                         calc.currentValue = '';
                         display.textContent = `${calc.previousValue} ${calc.operator}`;
-                    } else if (id === 'backspace') {
-                        calc.currentValue = calc.currentValue.slice(0, -1);
-                        display.textContent = calc.currentValue || '0';
-                    } else {
-                        calc.currentValue += button.textContent;
-                        display.textContent = calc.currentValue;
                     }
-                });
-            });
+                } else if (id === 'backspace') {
+                    calc.currentValue = calc.currentValue.slice(0, -1);
+                    display.textContent = calc.currentValue || '0';
+                } else if (id === 'clear') {
+                    calc.currentValue = '';
+                    calc.previousValue = '';
+                    calc.operator = null;
+                    display.textContent = '0';
+                } else {
+                    calc.currentValue += textContent;
+                    display.textContent = `${calc.previousValue} ${calc.operator || ''} ${calc.currentValue}`;
+                }
+            }
         });
     </script>
 </body>

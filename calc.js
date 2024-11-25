@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
             display.textContent = '0';
         } else {
             calc.currentValue += textContent;
-            display.textContent = calc.currentValue;
+            display.textContent = `${calc.previousValue} ${calc.operator || ''} ${calc.currentValue}`;
         }
     }
 });

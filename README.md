@@ -52,4 +52,6 @@ Make the "screen" of the calculator look old school with blocky 8 bit numbers in
 2. expand function by function
 
 
+Adding a note: does github desktop work?
+
 
